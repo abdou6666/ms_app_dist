@@ -1,0 +1,17 @@
+version: "23.0.5"
+services:
+  discovery:
+    build: ./eureka-server
+    ports:
+    - 8761:8761
+    image: eureka_image
+
+  candidat:
+    build: ./Candidate
+    environment:
+    - eureka.client.serviceUrl.defaultZone=http://discovery:8761/eureka/
+    ports:
+    - 8088:8088
+    image: candidate-service
+    depends_on:
+    - discovery
